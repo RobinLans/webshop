@@ -5,9 +5,11 @@ import { createContext, useState } from "react";
 export const context = createContext<any>(null);
 
 const ContextProvider = ({ children }: any) => {
-    const [test, setTest] = useState<boolean>(false);
+    const [loggedIn, setLoggedIn] = useState<boolean>(
+        JSON.parse(localStorage.getItem("loggedIn") as string) || false
+    );
     return (
-        <context.Provider value={{ test, setTest }}>
+        <context.Provider value={{ loggedIn, setLoggedIn }}>
             {children}
         </context.Provider>
     );
