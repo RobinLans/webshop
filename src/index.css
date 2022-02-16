@@ -3,3 +3,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.inputs {
+    @apply h-10 bg-transparent border-b-2  border-[#337B91] pl-2 pr-12 text-[#337B91] font-bold placeholder:text-[#337B91] placeholder:text-opacity-40;
+}
