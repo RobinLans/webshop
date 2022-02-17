@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { supabase } from "../supabaseClient";
 import { context } from "../context/context";
 import { PetCard } from "../models/PetsCardInterface";
 
@@ -7,7 +8,46 @@ interface Props {
 }
 
 function PetsCard({ pet }: Props) {
-    const { loggedIn } = useContext(context);
+    const { loggedIn, setShowPopUp } = useContext(context);
+
+    async function addToCart(pet: PetCard) {
+        const abortCont = new AbortController();
+        // Check if pet already exists in Cart
+        let { data: cart, error } = await supabase
+            .from("cart")
+            .select("*")
+            .match({ name: pet.name });
+
+        if (!cart) return;
+
+        if (cart?.length > 0) {
+            const quantityToAdd = cart[0].quantity + 1;
+            const { data, error } = await supabase
+                .from("cart")
+                .update({ quantity: quantityToAdd })
+                .eq("name", pet.name);
+
+            showAndRemoveAlert();
+        } else if (cart?.length === 0) {
+            const { data, error } = await supabase.from("cart").insert([
+                {
+                    userId: 1,
+                    name: pet.name,
+                    price: pet.price,
+                    quantity: 1,
+                    image: pet.image,
+                },
+            ]);
+            showAndRemoveAlert();
+        }
+    }
+
+    function showAndRemoveAlert() {
+        setShowPopUp(true);
+        setTimeout(() => {
+            setShowPopUp(false);
+        }, 1000);
+    }
 
     return (
         <li
@@ -24,12 +64,20 @@ function PetsCard({ pet }: Props) {
                     </p>
                     <button
                         className={`w-24  text-[#F3E5DB] p-1 rounded mr-2 pointer-events-auto ${
-                            loggedIn ? "bg-[#337B91]" : "bg-[#7c8d9380] text-sm"
+                            loggedIn && pet.quantity !== 0
+                                ? "bg-[#337B91]"
+                                : "bg-[#7c8d9380] text-sm"
                         }`}
-                        title="kuk"
-                        disabled={!loggedIn}
+                        disabled={!loggedIn || pet.quantity === 0}
+                        onClick={() => addToCart(pet)}
                     >
-                        {loggedIn ? "Add To Cart" : "Sign in to buy"}
+                        {loggedIn && pet.quantity !== 0
+                            ? "Add To Cart"
+                            : `${
+                                  pet.quantity === 0
+                                      ? "Out of stock"
+                                      : "Sign in to buy"
+                              }`}
                     </button>
                 </div>
             </div>

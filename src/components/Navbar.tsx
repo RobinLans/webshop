@@ -4,7 +4,8 @@ import { useContext } from "react";
 import { context } from "../context/context";
 
 function Navbar() {
-    const { loggedIn, setShowSignInModal, setLoggedIn } = useContext(context);
+    const { loggedIn, setShowSignInModal, setLoggedIn, setShowCartModal } =
+        useContext(context);
 
     function handleSignOut() {
         if (window.confirm("Do you wanna sign out?")) {
@@ -48,7 +49,12 @@ function Navbar() {
                         >
                             Sign Out
                         </button>
-                        <button data-testid="cart">
+                        <button
+                            data-testid="cart"
+                            onClick={() => {
+                                setShowCartModal(true);
+                            }}
+                        >
                             <FaShoppingCart className="text-[#337B91] text-4xl" />
                         </button>
                     </>

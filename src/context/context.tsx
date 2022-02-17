@@ -10,6 +10,8 @@ const ContextProvider = ({ children }: any) => {
     );
     const [showSignInModal, setShowSignInModal] = useState<boolean>(false);
     const [showCartModal, setShowCartModal] = useState<boolean>(false);
+    const [showPopUp, setShowPopUp] = useState<boolean>(false);
+
     return (
         <context.Provider
             value={{
@@ -19,6 +21,8 @@ const ContextProvider = ({ children }: any) => {
                 setShowSignInModal,
                 showCartModal,
                 setShowCartModal,
+                showPopUp,
+                setShowPopUp,
             }}
         >
             {children}
