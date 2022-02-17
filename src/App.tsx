@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import { context } from "./context/context";
 import Navbar from "./components/Navbar";
-import PetsContainer from "./components/PetsContainer";
+import Products from "./pages/Products";
 import About from "./components/About";
 import LoginModal from "./components/LoginModal";
 
@@ -18,7 +18,7 @@ function App() {
         <div className="bg-bg w-screen h-screen bg-cover font-body flex flex-col items-center text-[#337B91]">
             <Navbar />
             <Routes>
-                <Route path="/" element={<PetsContainer />} />
+                <Route path="/" element={<Products />} />
                 <Route path="/about" element={<About />} />
             </Routes>
             {showSignInModal && <LoginModal />}

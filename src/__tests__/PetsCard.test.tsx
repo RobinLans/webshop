@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import PetsCard from "../components/PetsCard";
 import { PetCard } from "../models/PetsCardInterface";
+import ContextProvider from "../context/context";
 
 describe("PetsCard", () => {
     it("renders without crashing", () => {
@@ -12,6 +13,10 @@ describe("PetsCard", () => {
             image: "imageUrl",
             id: 1,
         };
-        render(<PetsCard pet={pet} />);
+        render(
+            <ContextProvider>
+                <PetsCard pet={pet} />
+            </ContextProvider>
+        );
     });
 });

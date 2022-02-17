@@ -1,12 +1,12 @@
 import { useEffect, useState, ChangeEvent } from "react";
 import { supabase } from "../supabaseClient";
-import PetsCard from "./PetsCard";
+import PetsList from "../components/PetsList";
 import { PetCard } from "../models/PetsCardInterface";
 
-function PetsContainer() {
+function Products() {
     // The fetchedPets variable is just to save the original array
     const [fetchedPets, setFetchedPets] = useState<PetCard[] | null>([]);
-    const [petsList, setPetsList] = useState<PetCard[] | null>([]);
+    const [petsToRender, setPetsToRender] = useState<PetCard[] | null>([]);
 
     async function fetchThePets(abortCont: any) {
         let { data: pets, error } = await supabase
@@ -17,7 +17,7 @@ function PetsContainer() {
         if (error) {
             return;
         }
-        setPetsList(pets);
+        setPetsToRender(pets);
         setFetchedPets(pets);
     }
 
@@ -41,11 +41,11 @@ function PetsContainer() {
         });
 
         if (searchQuery.length === 0) {
-            setPetsList(fetchedPets);
+            setPetsToRender(fetchedPets);
             return;
         }
 
-        setPetsList(filteredArray);
+        setPetsToRender(filteredArray);
     }
 
     return (
@@ -57,14 +57,9 @@ function PetsContainer() {
                 className="inputs w-52 mt-4"
             />
 
-            <ul className="grid grid-cols-4 gap-10 mt-6 mb-6">
-                {petsList &&
-                    petsList.map((pet) => {
-                        return <PetsCard pet={pet} />;
-                    })}
-            </ul>
+            <PetsList petsToRender={petsToRender} />
         </div>
     );
 }
 
-export default PetsContainer;
+export default Products;

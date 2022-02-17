@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import PetsContainer from "../components/PetsContainer";
+import PetsContainer from "../pages/Products";
 import PetsCard from "../components/PetsCard";
 import { PetCard } from "../models/PetsCardInterface";
 import { act } from "react-dom/test-utils";
