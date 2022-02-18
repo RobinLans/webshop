@@ -10,3 +10,7 @@
 
 -   As a visitor I want to be able to login provided I have the correct credentials
 -   As a user I want to be able to add and remove one or more pets to the cart
+
+## Login
+username: user
+password: user
