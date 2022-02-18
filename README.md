@@ -9,6 +9,3 @@
 -   As a visitor I want to be able to login provided I have the correct credentials
 -   As a user I want to be able to add and remove one or more pets to the cart
 -   As a user I want to be able to place an order and get an ordernumber
--   As a admin, I want to be able to edit pets in the store
--   As an admin, I want to be able to remove pets from the store
--   As an admin, I want to be able to add new pets to the store
