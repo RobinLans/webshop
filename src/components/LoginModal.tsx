@@ -88,6 +88,7 @@ function LoginModal() {
                     type="submit"
                     // onClick={() => handleLogin(username, password)}
                     className="text-[#F3E5DB] p-1 rounded mr-2 bg-[#337B91]"
+                    data-testid="modal-sign-in"
                 >
                     Sign in
                 </button>

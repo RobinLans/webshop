@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { PetCard } from "../models/PetsCardInterface";
 import { supabase } from "../supabaseClient";
 import { context } from "../context/context";
+import { act } from "react-dom/test-utils";
 
 interface Props {
     pet: PetCard;

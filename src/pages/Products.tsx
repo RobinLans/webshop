@@ -35,9 +35,9 @@ function Products() {
         petSearch: PetCard[] | null
     ) {
         if (!petSearch) return;
-        const searchQuery = e.target.value;
+        const searchQuery = e.target.value.toLowerCase();
         const filteredArray: PetCard[] = petSearch?.filter((pet) => {
-            return pet.name.toLocaleLowerCase().includes(searchQuery);
+            return pet.name.toLowerCase().includes(searchQuery);
         });
 
         if (searchQuery.length === 0) {

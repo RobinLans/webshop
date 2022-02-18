@@ -1,8 +1,18 @@
 import Navbar from "../components/Navbar";
+import App from "../App";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+
 import { BrowserRouter } from "react-router-dom";
 import ContextProvider from "../context/context";
+
+// USER STORY:
+// As a visitor, I want to be able to navigate between the products page
+// and the about page
+
+// Test Cases:
+// It renders a navbar with links
+// It shows an login button if I'm not logged in, the cart button should not render
+// It shows a cart if I'm logged in
 
 describe("Navbar", () => {
     const loggedIn = true;
@@ -22,7 +32,7 @@ describe("Navbar", () => {
         render(navbarRender);
     });
 
-    it("renders 2 links", () => {
+    it("renders a navbar with links", () => {
         render(navbarRender);
         const productsPage = screen.getByText("Products");
         const aboutPage = screen.getByText("About");
@@ -41,25 +51,40 @@ describe("Navbar", () => {
         expect(cartBtn).toBeNull();
     });
 
-    // it("shows a cart if I'm logged in", () => {
-    //     window.localStorage.setItem("loggedIn", JSON.stringify(true));
-    //     render(
-    //         <ContextProvider value={{ loggedIn }}>
-    //             <BrowserRouter>
-    //                 <Navbar />
-    //             </BrowserRouter>
-    //         </ContextProvider>
-    //     );
-    //     const ls = window.localStorage.getItem("loggedIn");
+    it("shows a cart if I'm logged in", () => {
+        // Check to see if the cart renders before we log in, it shouldn't
+        render(
+            <ContextProvider value={{ loggedIn }}>
+                <BrowserRouter>
+                    <Navbar />
+                </BrowserRouter>
+            </ContextProvider>
+        );
+        const maybeCartBtnBeforeLogIn = screen.queryByTestId("cart");
 
-    //     console.log(ls);
+        expect(maybeCartBtnBeforeLogIn).toBeNull();
 
-    //     const signInBtn = screen.getByText("Sign In");
+        // Log in by adding a token in LS
+        window.localStorage.setItem("loggedIn", JSON.stringify(true));
+        // re-render the whole app
+        render(
+            <ContextProvider>
+                <BrowserRouter>
+                    <App />
+                </BrowserRouter>
+            </ContextProvider>
+        );
 
-    //     console.log(signInBtn);
+        render(
+            <ContextProvider value={{ loggedIn }}>
+                <BrowserRouter>
+                    <Navbar />
+                </BrowserRouter>
+            </ContextProvider>
+        );
 
-    //     // expect(logInBtn).toBeNull();
-    // });
+        const maybeCartBtnAfterLogIn = screen.getAllByTestId("cart");
+
+        expect(maybeCartBtnAfterLogIn[0]).toBeInTheDocument();
+    });
 });
-
-//When Sign Out is pressed, the cart and the signup should disappear

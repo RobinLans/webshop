@@ -38,6 +38,7 @@ function Navbar() {
                         onClick={() => {
                             setShowSignInModal(true);
                         }}
+                        data-testid="nav-sign-in"
                     >
                         Sign In
                     </button>

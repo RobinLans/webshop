@@ -3,6 +3,13 @@ import PetsList from "../components/PetsList";
 import { PetCard } from "../models/PetsCardInterface";
 import ContextProvider from "../context/context";
 
+// USER STORY:
+// As a visitor, I want to be able to see all the pets on the frontpage
+
+// Test Cases:
+// It renders at least two petCards
+// It renders the correct data at the right place
+
 describe("PetsList", () => {
     const petsToRender: PetCard[] = [
         {
